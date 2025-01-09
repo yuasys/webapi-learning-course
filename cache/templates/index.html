@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache-Control API Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cache-Control API Tester</h1>
+    <div>
+        <button onclick="testWithStaleWhileRevalidate(false)">with-stale-while-revalidate</button>
+        <button onclick="testNoStaleWhileRevalidate(false)">no-stale-while-revalidate</button>
+    </div>
+    <div class="output" id="output"></div>
+
+    <script>
+        const BASE_URL = ""; 
+
+        
+        async function sendRequest(endpoint) {
+            const headers = {};
+
+            try {
+                const response = await fetch(`${BASE_URL}${endpoint}`, {
+                    method: "GET",
+                    headers: headers
+                });
+
+                const data = await response.json();
+                return {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: data
+                };
+            } catch (error) {
+                return {
+                    status: "Error",
+                    statusText: error.message,
+                    data: null
+                };
+            }
+        }
+
+        
+        async function testWithStaleWhileRevalidate() {
+            const result = await sendRequest("/cache/with-stale-while-revalidate");
+            displayResult("/cache/with-stale-while-revalidate", result);
+        }
+
+        
+        async function testNoStaleWhileRevalidate() {
+            const result = await sendRequest("/cache/no-stale-while-revalidate");
+            displayResult("/cache/no-stale-while-revalidate", result);
+        }
+
+        
+        function displayResult(endpoint, result) {
+            const outputDiv = document.getElementById("output");
+            const resultHTML = `
+                <div>
+                    <h3>Request to: ${endpoint}</h3>
+                    <p><strong>Status:</strong> ${result.status} ${result.statusText}</p>
+                    <pre>${JSON.stringify(result.data, null, 2)}</pre>
+                </div>
+                <hr>
+            `;
+            outputDiv.innerHTML = resultHTML + outputDiv.innerHTML;
+        }
+    </script>
+</body>
+</html>
