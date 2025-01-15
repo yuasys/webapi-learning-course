@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  title: Example API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:5001
+    description: Local development server
+paths:
+  /greets:
+    get:
+      summary: Returns a greeting message
+      responses:
+        '200':
+          description: A greeting message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello, world!"
+  /calculate:
+    post:
+      summary: Performs a calculation
+      requestBody:
+        description: Input numbers for the calculation
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                num1:
+                  type: number
+                  example: 5
+                num2:
+                  type: number
+                  example: 10
+      responses:
+        '200':
+          description: Calculation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: number
+                    example: 15

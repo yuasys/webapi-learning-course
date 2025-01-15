@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "target": "ES2020",
+      "module": "ES6",
+      "outDir": "./dist",
+      "rootDir": "./",
+      "strict": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "baseUrl": ".",
+      "paths": {
+        "../generated/*": ["./dist/generated/*"]
+      }
+    },
+    "include": [
+      "custom/**/*.ts",          
+      "generated/**/*.ts"    
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
+  
