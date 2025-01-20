@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fetch Method Buttons + Form POST</title>
+</head>
+<body>
+  <h1>Fetch Method Buttons + Form POST</h1>
+
+  <!-- ボタン: Fetch でGETリクエスト -->
+  <button id="getBtn">GET Request</button>
+  <!-- ボタン: Fetch でPOSTリクエスト -->
+  <button id="postBtn">POST Request</button>
+  <!-- ボタン: Fetch でPUTリクエスト -->
+  <button id="putBtn">PUT Request</button>
+  <!-- ボタン: Fetch でPATCHリクエスト -->
+  <button id="patchBtn">PATCH Request</button>
+
+  <hr />
+
+  <!-- フォーム: method="POST" -->
+  <form id="formPost" action="/form-endpoint" method="POST">
+    <label for="username">Username: </label>
+    <input type="text" name="username" id="username" />
+    <button type="submit">Submit Form POST</button>
+  </form>
+
+  <script>
+    // 1. GET
+    document.getElementById("getBtn").addEventListener("click", () => {
+      fetch("https://example.com/some-endpoint", {
+        method: "GET",
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          console.log("GET response:", data);
+          alert("GET response: " + data);
+        })
+        .catch((error) => {
+          console.error("GET error:", error);
+        });
+    });
+
+    // 2. POST
+    document.getElementById("postBtn").addEventListener("click", () => {
+      fetch("https://example.com/some-endpoint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: "This is a POST request." }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("POST response:", data);
+          alert("POST response: " + JSON.stringify(data));
+        })
+        .catch((error) => {
+          console.error("POST error:", error);
+        });
+    });
+
+    // 3. PUT
+    document.getElementById("putBtn").addEventListener("click", () => {
+      fetch("https://example.com/some-endpoint", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: "This is a PUT request." }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("PUT response:", data);
+          alert("PUT response: " + JSON.stringify(data));
+        })
+        .catch((error) => {
+          console.error("PUT error:", error);
+        });
+    });
+
+    // 4. PATCH
+    document.getElementById("patchBtn").addEventListener("click", () => {
+      fetch("https://example.com/some-endpoint", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: "This is a PATCH request." }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("PATCH response:", data);
+          alert("PATCH response: " + JSON.stringify(data));
+        })
+        .catch((error) => {
+          console.error("PATCH error:", error);
+        });
+    });
+  </script>
+</body>
+</html>
