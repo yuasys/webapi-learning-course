@@ -9,6 +9,6 @@ services:
     build: ./frontend
     container_name: nginx_server
     ports:
-      - "5000:80"
+      - "9000:80"
     depends_on:
       - flask
