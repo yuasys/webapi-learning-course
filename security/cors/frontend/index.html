@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>SOP & CORS Demo</title>
+</head>
+<body>
+<h1>同一オリジンポリシー（SOP） & CORS Demo</h1>
+<p>コンソールでリクエスト結果を確認してください。</p>
+
+<button id="btn1">ボタン1 (SOPによるレスポンスブロック)</button>
+<button id="btn2">ボタン2 (SOPにより許可される)</button>
+<button id="btn3">ボタン3 (プリフライトで弾かれる)</button>
+<button id="btn4">ボタン4 (プリフライト許可される)</button>
+
+<script>
+  const btn1 = document.getElementById('btn1');
+  btn1.addEventListener('click', () => {
+    fetch('http://localhost:8080/no-cors-block')
+            .then(res => res.json())
+            .then(data => console.log('Button 1 Success:', data))
+            .catch(err => console.error('Button 1 Error:', err));
+  });
+
+  const btn2 = document.getElementById('btn2');
+  btn2.addEventListener('click', () => {
+    fetch('http://localhost:8080/cors-no-preflight-pass')
+            .then(res => res.json())
+            .then(data => console.log('Button 3 Success:', data))
+            .catch(err => console.error('Button 3 Error:', err));
+  });
+
+  const btn3 = document.getElementById('btn3');
+  btn3.addEventListener('click', () => {
+    fetch('http://localhost:8080/cors-with-preflight-block', {
+      method: 'GET',
+      headers: {
+        'X-Custom-Header': 'value'
+      }
+    })
+            .then(res => res.json())
+            .then(data => console.log('Button 3 Success:', data))
+            .catch(err => console.error('Button 3 Error:', err));
+  });
+  const btn4 = document.getElementById('btn4');
+  btn4.addEventListener('click', () => {
+
+    fetch('http://localhost:8080/cors-with-preflight-pass', {
+      method: 'GET',
+      headers: {
+        'X-Custom-Header': 'value'
+      }
+    })
+            .then(res => res.json())
+            .then(data => console.log('Button 4 Success:', data))
+            .catch(err => console.error('Button 4 Error:', err));
+  });
+</script>
+</body>
+</html>
