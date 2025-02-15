@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Flask API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: inline-block;
+      width: 80px;
+    }
+    input {
+      margin-bottom: 10px;
+    }
+    button {
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flask API Test</h1>
+  
+  <section>
+    <h2>Login</h2>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" value="">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" value="">
+    </div>
+    <button id="loginBtn">Login</button>
+  </section>
+  
+  <hr>
+  
+  <section>
+    <button id="userBtn">Get /users/me</button>
+    <button id="logoutBtn">Logout</button>
+  </section>
+  
+  <hr>
+  
+  <section>
+    <h2>Result</h2>
+    <pre id="result"></pre>
+  </section>
+  
+  <script>
+    const resultDiv = document.getElementById('result');
+
+    function showResult(data) {
+      resultDiv.textContent = JSON.stringify(data, null, 2);
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+          credentials: 'same-origin'
+        });
+        const data = await response.json();
+        showResult(data);
+      } catch (error) {
+        showResult({ error: error.message });
+      }
+    });
+
+    document.getElementById('userBtn').addEventListener('click', async () => {
+      try {
+        const response = await fetch('/users/me', {
+          method: 'GET',
+          credentials: 'same-origin'
+        });
+        const data = await response.json();
+        showResult(data);
+      } catch (error) {
+        showResult({ error: error.message });
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        const response = await fetch('/logout', {
+          method: 'POST',
+          credentials: 'same-origin'
+        });
+        const data = await response.json();
+        showResult(data);
+      } catch (error) {
+        showResult({ error: error.message });
+      }
+    });
+  </script>
+</body>
+</html>

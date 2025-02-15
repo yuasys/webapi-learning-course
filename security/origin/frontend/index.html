@@ -26,8 +26,8 @@
   btn2.addEventListener('click', () => {
     fetch('http://localhost:8080/cors-no-preflight-pass')
             .then(res => res.json())
-            .then(data => console.log('Button 3 Success:', data))
-            .catch(err => console.error('Button 3 Error:', err));
+            .then(data => console.log('Button 2 Success:', data))
+            .catch(err => console.error('Button 2 Error:', err));
   });
 
   const btn3 = document.getElementById('btn3');
