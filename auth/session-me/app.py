@@ -29,7 +29,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-@app.route('/login', methods=['POST'])
+@app.route('/auth/login', methods=['POST'])
 def login():
     """
     ログインエンドポイント:
@@ -56,7 +56,7 @@ def get_current_user():
     """
     return jsonify(session['user'])
 
-@app.route('/logout', methods=['POST'])
+@app.route('/auth/logout', methods=['POST'])
 @login_required
 def logout():
     """
