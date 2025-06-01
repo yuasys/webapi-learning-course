@@ -13,7 +13,7 @@ def index():
 @app.route('/cache/no-stale-while-revalidate', methods=['GET'])
 def no_stale_while_revalidate():
     """
-    Cache-Control: stale-while-revalidate を含間ないレスポンス
+    Cache-Control: stale-while-revalidate を含まないレスポンス
     """
     now = datetime.utcnow()
     response = make_response(
